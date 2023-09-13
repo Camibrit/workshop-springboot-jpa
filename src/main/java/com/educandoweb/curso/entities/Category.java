@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.educandoweb.course.entities.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -18,12 +19,16 @@ import jakarta.persistence.Table;
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String name;
 	
-
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories")
+	private Set<Product> products = new HashSet<>();
 	
 	public Category() {
 	}
@@ -50,8 +55,9 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 
-	
-	
+	public Set<Product> getProducts() {
+		return products;
+	}
 	
 	@Override
 	public int hashCode() {
