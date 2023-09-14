@@ -3,7 +3,7 @@ package com.educandoweb.curso.entities.pk;
 
 	import java.io.Serializable;
 
-import com.educandoweb.course.entities.Product;
+import com.educandoweb.curso.entities.Product;
 import com.educandoweb.curso.entities.Order;
 
 import jakarta.persistence.Embeddable;
