@@ -1,32 +1,28 @@
 package com.educandoweb.curso.entities;
-
 import java.util.HashSet;
 import java.util.Set;
 
-import com.educandoweb.curso.entities.Category;
-import com.educandoweb.curso.entities.Order;
-import com.educandoweb.curso.entities.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-
 public class Product {
-	
+	private OrderItem[] items;
 	private Long id;
-	private String name;
-	private String description;
 	private Double price;
 	private String imgUrl;
-	
-	@ManyToMany
-	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories = new HashSet<>();
-	
-	@OneToMany(mappedBy = "id.product")
-	private Set<OrderItem> items = new HashSet<>();
+	private String description;
+	private String name;
+
+	public Product() {
+	}
+
+	public Product(Long id, String name, String description, Double price, String imgUrl) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
+	}
 
 	public Long getId() {
 		return id;
@@ -68,15 +64,10 @@ public class Product {
 		this.imgUrl = imgUrl;
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgUrl, Set<Category> categories) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.imgUrl = imgUrl;
-		this.categories = categories;
+	public Set<Category> getCategories() {
+		return getCategories();
 	}
+
 	@JsonIgnore
 	public Set<Order> getOrders() {
 		Set<Order> set = new HashSet<>();
@@ -111,27 +102,3 @@ public class Product {
 		return true;
 	}
 }
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
