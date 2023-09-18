@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.educandoweb.curso.entities.User;
 import com.educandoweb.curso.exceptions.DatabaseException;
+import com.educandoweb.curso.exceptions.ResourceNotFoundException;
 import com.educandoweb.curso.repositories.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -29,7 +30,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ResourceExceptionHandler(id));
+        return obj.orElseThrow();
     }
 
     @Transactional
@@ -42,7 +43,7 @@ public class UserService {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceExceptionHandler(id);
+        	throw new ResourceNotFoundException(id);
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
@@ -55,7 +56,8 @@ public class UserService {
             updateData(entity, obj);
             return repository.save(entity);
         } catch (EntityNotFoundException e) {
-            throw new ResourceExceptionHandler(id);
+        	throw new ResourceNotFoundException(id);
+
         }
     }
 
